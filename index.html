@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="KisanKart — a demo agriculture e-commerce storefront for seeds, fertilizers, crop protection, sprayers, irrigation and farm machinery." />
+  <meta name="theme-color" content="#176B3A" />
+  <title>KisanKart — Seeds, Fertilizers, Crop Protection &amp; Farm Equipment</title>
+  <link rel="icon" href="assets/images/logo.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css?v=17" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <!-- Preloader (Kage-style) -->
+  <div id="pre" aria-live="polite" aria-label="Loading KisanKart">
+    <div class="pre-in">
+      <img class="pre-mark" src="assets/images/logo.svg" width="44" height="44" alt="" />
+      <p class="pre-jp">किसान कार्ट</p>
+      <div class="pre-bar"><i id="pre-fill"></i></div>
+      <div class="pre-meta"><span>Preparing the field</span><span id="pre-pct">0%</span></div>
+    </div>
+  </div>
+  <div id="grain" aria-hidden="true"></div>
+
+<div class="shell">
+
+  <!-- 1. Announcement bar -->
+  <div class="announce" role="region" aria-label="Announcements">
+    <div class="container announce__inner">
+      <p class="announce__msg"><span aria-hidden="true">🌾</span> Kharif season sale — up to 25% off on seeds &amp; crop nutrition. Demo store, no real orders.</p>
+      <p class="announce__meta">Free delivery on demo orders above ₹999</p>
+    </div>
+  </div>
+
+  <!-- 2. Main header -->
+  <div class="glass-top" id="glassTop" aria-hidden="true"></div>
+  <header class="header" id="header">
+    <div class="container header__inner">
+      <button class="icon-btn header__menu-btn" id="menuBtn" type="button" aria-label="Open menu" aria-controls="mobileNav" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+
+      <a class="brand" href="#top" aria-label="KisanKart home">
+        <img src="assets/images/logo.svg" width="40" height="40" alt="" />
+        <span class="brand__text">Kisan<span>Kart</span></span>
+      </a>
+
+      <form class="search" id="searchForm" role="search" autocomplete="off">
+        <label class="sr-only" for="searchInput">Search products, categories or crops</label>
+        <input class="search__input" id="searchInput" type="search" name="q" placeholder="Search seeds, fertilizers, sprayers, crops…" aria-autocomplete="list" aria-controls="searchSuggest" aria-expanded="false" />
+        <button class="search__btn" type="submit" aria-label="Search">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        </button>
+        <ul class="search__suggest" id="searchSuggest" role="listbox" aria-label="Search suggestions" hidden></ul>
+      </form>
+
+      <nav class="header__actions" aria-label="Account and cart">
+        <button class="icon-btn" type="button" id="accountBtn" aria-label="Account (demo — sign in unavailable)">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>
+          <span class="icon-btn__label">Account</span>
+        </button>
+        <button class="icon-btn" type="button" id="wishlistBtn" aria-label="Wishlist" aria-controls="wishlistDrawer" aria-expanded="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-4.5-9-9a5 5 0 0 1 9-3 5 5 0 0 1 9 3c-2 4.5-9 9-9 9z"/></svg>
+          <span class="icon-btn__label">Wishlist</span>
+          <span class="badge" id="wishlistCount" aria-live="polite">0</span>
+        </button>
+        <button class="icon-btn" type="button" id="cartBtn" aria-label="Cart" aria-controls="cartDrawer" aria-expanded="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.5 11h11L21 7H6.2"/><circle cx="9" cy="20" r="1.5"/><circle cx="17" cy="20" r="1.5"/></svg>
+          <span class="icon-btn__label">Cart</span>
+          <span class="badge" id="cartCount" aria-live="polite">0</span>
+        </button>
+      </nav>
+    </div>
+
+    <!-- 3. Category navigation (desktop) -->
+    <nav class="catnav" aria-label="Product categories">
+      <div class="container">
+        <ul class="catnav__list" id="catNav"></ul>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Mobile navigation drawer -->
+  <div class="drawer drawer--left" id="mobileNav" role="dialog" aria-modal="true" aria-label="Menu" hidden>
+    <div class="drawer__head">
+      <span class="drawer__title">Browse categories</span>
+      <button class="icon-btn" type="button" data-close="mobileNav" aria-label="Close menu">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+    </div>
+    <div class="drawer__body">
+      <ul class="mobnav" id="mobNavList"></ul>
+    </div>
+  </div>
+
+  <main id="main">
+    <span id="top"></span>
+
+    <!-- 4. Hero carousel -->
+    <section class="hero" id="hero" aria-roledescription="carousel" aria-label="Seasonal campaigns">
+      <div class="hero__track" id="heroTrack"></div>
+      <div class="hero__controls container">
+        <button class="hero__arrow" type="button" id="heroPrev" aria-label="Previous slide">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7"/></svg>
+        </button>
+        <button class="hero__arrow" type="button" id="heroNext" aria-label="Next slide">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- Bento: featured collections + brand statement -->
+    <section class="section section--tight reveal" aria-labelledby="bentoTitle">
+      <div class="container bento">
+        <button class="bento__card bento__card--img" type="button" data-category="seeds">
+          <img src="https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=70" alt="" width="800" height="900" loading="lazy" />
+          <span class="bento__label"><b>Quality seeds</b><small>Hybrid &amp; certified</small></span>
+          <span class="btn btn--white btn--sm">Shop seeds</span>
+        </button>
+        <button class="bento__card bento__card--img" type="button" data-category="machinery">
+          <img src="https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?auto=format&fit=crop&w=800&q=70" alt="" width="800" height="900" loading="lazy" />
+          <span class="bento__label"><b>Smart equipment</b><small>Sprayers to tillers</small></span>
+          <span class="btn btn--white btn--sm">View machinery</span>
+        </button>
+        <div class="bento__copy">
+          <span class="section__label">A marketplace for every farm</span>
+          <h2 class="display" id="bentoTitle">More than a store<br />A stronger harvest</h2>
+          <ul class="features">
+            <li><span class="features__icon" aria-hidden="true">🌱</span><b>Grow</b><span>Better inputs</span></li>
+            <li><span class="features__icon" aria-hidden="true">📈</span><b>Improve</b><span>Your yield</span></li>
+            <li><span class="features__icon" aria-hidden="true">🤝</span><b>Belong</b><span>To a community</span></li>
+          </ul>
+          <a class="bento__ring" href="#knowledge">
+            <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=400&q=60" alt="" width="400" height="400" loading="lazy" />
+            <span>Farming <br />knowledge <b aria-hidden="true">→</b></span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Shop / results (hidden until a search, category or crop is chosen) -->
+    <section class="section shop" id="shop" hidden aria-labelledby="shopTitle">
+      <div class="container">
+        <div class="shop__head">
+          <div>
+            <h2 class="section__title" id="shopTitle">All products</h2>
+            <p class="shop__count" id="shopCount" aria-live="polite"></p>
+          </div>
+          <div class="shop__tools">
+            <div class="chips" id="shopChips" aria-label="Active filters"></div>
+            <label class="sort">
+              <span>Sort by</span>
+              <select id="sortSelect">
+                <option value="popular">Popularity</option>
+                <option value="price-asc">Price: low to high</option>
+                <option value="price-desc">Price: high to low</option>
+                <option value="discount">Biggest discount</option>
+                <option value="rating">Customer rating</option>
+              </select>
+            </label>
+            <button class="btn btn--ghost btn--sm" type="button" id="shopClear">Clear</button>
+          </div>
+        </div>
+        <div class="grid grid--products" id="shopGrid"></div>
+        <div class="empty" id="shopEmpty" hidden>
+          <span class="empty__icon" aria-hidden="true">🔍</span>
+          <h3>No products found</h3>
+          <p>Try a different keyword, or browse one of the popular categories below.</p>
+          <div class="empty__links" id="shopEmptyLinks"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Shop by category -->
+    <section class="section reveal" id="categories" aria-labelledby="catTitle">
+      <div class="container">
+        <div class="section__head">
+          <span class="section__label">Categories</span>
+            <h2 class="section__title" id="catTitle">Shop by category</h2>
+          <p class="section__sub">Everything from sowing to harvest, organised the way you farm.</p>
+        </div>
+        <div class="scroller" id="categoryCards" role="list"></div>
+      </div>
+    </section>
+
+    <!-- 6. Promotional offer -->
+    <section class="section reveal" aria-labelledby="promoTitle">
+      <div class="container">
+        <div class="promo">
+          <div class="promo__content">
+            <span class="section__label section__label--light">Limited period demo offer</span>
+            <h2 class="promo__title" id="promoTitle">Flat 20% off on crop nutrition bundles</h2>
+            <p>Water-soluble NPK, micronutrient mixes and bio-stimulants — stock up before peak flowering.</p>
+            <button class="btn btn--accent" type="button" data-category="fertilizers">Grab the offer</button>
+          </div>
+          <img class="promo__img" src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=900&q=70" width="900" height="600" loading="lazy" alt="Hands holding fresh green seedlings in soil" />
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. Today's best deals -->
+    <section class="section reveal" id="deals" aria-labelledby="dealsTitle">
+      <div class="container">
+        <div class="section__head section__head--row">
+          <div>
+            <span class="section__label">Offers</span>
+            <h2 class="section__title" id="dealsTitle">Today's best deals</h2>
+            <p class="section__sub">Sample pricing for demonstration — not live offers.</p>
+          </div>
+          <button class="btn btn--ghost" type="button" data-shop="deals">View all deals</button>
+        </div>
+        <div class="grid grid--products" id="dealsGrid"></div>
+      </div>
+    </section>
+
+    <!-- 8. Shop by crop -->
+    <section class="section section--cream reveal" id="crops" aria-labelledby="cropsTitle">
+      <div class="container">
+        <div class="section__head">
+          <span class="section__label">By crop</span>
+            <h2 class="section__title" id="cropsTitle">Shop by crop</h2>
+          <p class="section__sub">Pick your crop to see seeds, nutrition and protection products that fit it.</p>
+        </div>
+        <div class="crops" id="cropCards" role="list"></div>
+      </div>
+    </section>
+
+    <!-- Facts in numbers (demo figures) -->
+    <section class="section section--tight reveal" aria-labelledby="statsTitle">
+      <div class="container">
+        <h2 class="stats__title" id="statsTitle">A few facts about the demo catalogue</h2>
+        <ul class="stats" id="statsRow"></ul>
+      </div>
+    </section>
+
+    <!-- 9. Best sellers -->
+    <section class="section reveal" id="bestsellers" aria-labelledby="bsTitle">
+      <div class="container">
+        <div class="section__head section__head--row">
+          <div>
+            <span class="section__label">Popular</span>
+            <h2 class="section__title" id="bsTitle">Best sellers</h2>
+            <p class="section__sub">Most added to cart in our demo catalogue.</p>
+          </div>
+          <button class="btn btn--ghost" type="button" data-shop="bestsellers">View all</button>
+        </div>
+        <div class="grid grid--products" id="bestGrid"></div>
+      </div>
+    </section>
+
+    <!-- 10. Farming solutions -->
+    <section class="section section--dark reveal" id="solutions" aria-labelledby="solTitle">
+      <div class="container">
+        <div class="section__head">
+          <span class="section__label">Solutions</span>
+            <h2 class="section__title" id="solTitle">Farming solutions</h2>
+          <p class="section__sub">Problem-first collections for the decisions you make every season.</p>
+        </div>
+        <div class="solutions" id="solutionCards"></div>
+      </div>
+    </section>
+
+    <!-- 11. Trusted brands -->
+    <section class="section reveal" aria-labelledby="brandsTitle">
+      <div class="container">
+        <div class="section__head">
+          <span class="section__label">Brands</span>
+            <h2 class="section__title" id="brandsTitle">Brands in our catalogue</h2>
+          <p class="section__sub">Demo brand names for illustration only — no partnership or authorisation is implied.</p>
+        </div>
+        <div class="brands" id="brandRow"></div>
+      </div>
+    </section>
+
+    <!-- 12. Farming knowledge -->
+    <section class="section section--cream reveal" id="knowledge" aria-labelledby="knowTitle">
+      <div class="container">
+        <div class="section__head">
+          <span class="section__label">Knowledge</span>
+            <h2 class="section__title" id="knowTitle">Farming knowledge</h2>
+          <p class="section__sub">Practical guides on crop care, seasonal planning and pest prevention.</p>
+        </div>
+        <div class="articles" id="articleCards"></div>
+      </div>
+    </section>
+
+    <!-- 13. Trust & service benefits -->
+    <section class="section reveal" aria-labelledby="trustTitle">
+      <div class="container">
+        <h2 class="sr-only" id="trustTitle">Service benefits</h2>
+        <div class="benefits">
+          <div class="benefit">
+            <span class="benefit__icon" aria-hidden="true">🔒</span>
+            <h3>Secure checkout</h3>
+            <p>Checkout is a demo flow — no payment is collected on this site.</p>
+          </div>
+          <div class="benefit">
+            <span class="benefit__icon" aria-hidden="true">📦</span>
+            <h3>Order tracking</h3>
+            <p>Track status updates from dispatch to delivery once a backend is connected.</p>
+          </div>
+          <div class="benefit">
+            <span class="benefit__icon" aria-hidden="true">🎧</span>
+            <h3>Customer support</h3>
+            <p>Agronomy-aware support team for product and dosage questions.</p>
+          </div>
+          <div class="benefit">
+            <span class="benefit__icon" aria-hidden="true">🚚</span>
+            <h3>Delivery information</h3>
+            <p>Delivery timelines depend on your pincode and will be confirmed at checkout.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 14. Newsletter -->
+    <section class="section newsletter reveal" aria-labelledby="newsTitle">
+      <div class="container newsletter__inner">
+        <div>
+          <span class="section__label">Stay updated</span>
+            <h2 class="section__title" id="newsTitle">Get seasonal farming tips</h2>
+          <p class="section__sub">One short email a fortnight — crop calendars, pest alerts and offers.</p>
+        </div>
+        <form class="newsletter__form" id="newsletterForm" novalidate>
+          <div class="field">
+            <label class="sr-only" for="newsEmail">Email address</label>
+            <input id="newsEmail" type="email" name="email" placeholder="you@example.com" aria-describedby="newsError" required />
+            <button class="btn btn--primary" type="submit">Subscribe</button>
+          </div>
+          <p class="field__error" id="newsError" role="alert"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer__cta">
+      <p class="footer__lead">Be part of a growing community where you <span>grow your skills</span> and <span>raise better crops</span>.</p>
+      <div class="footer__follow">
+        <span>Follow us</span>
+        <div class="socials">
+          <button type="button" class="social" data-info="Social">Instagram</button>
+          <button type="button" class="social" data-info="Social">Facebook</button>
+          <button type="button" class="social" data-info="Social">YouTube</button>
+        </div>
+      </div>
+      <button class="btn btn--accent" type="button" data-shop="bestsellers">Start shopping →</button>
+    </div>
+    <div class="container footer__grid">
+      <div class="footer__brand">
+        <a class="brand brand--light" href="#top" aria-label="KisanKart home">
+          <img src="assets/images/logo.svg" width="40" height="40" alt="" />
+          <span class="brand__text">Kisan<span>Kart</span></span>
+        </a>
+        <p>An independent demo storefront for agricultural inputs and equipment. Built with HTML, CSS and vanilla JavaScript.</p>
+        <p class="footer__contact">
+          <span>📍 Plot 12, Agri Market Yard, Pune 411001 (placeholder)</span>
+          <span>📞 +91 00000 00000 (placeholder)</span>
+          <span>✉️ hello@kisankart.example</span>
+        </p>
+      </div>
+      <nav class="footer__col" aria-labelledby="fCat">
+        <h3 id="fCat">Categories</h3>
+        <ul id="footerCategories"></ul>
+      </nav>
+      <nav class="footer__col" aria-labelledby="fHelp">
+        <h3 id="fHelp">Customer support</h3>
+        <ul>
+          <li><button type="button" class="link" data-info="Track order">Track your order</button></li>
+          <li><button type="button" class="link" data-info="Returns">Returns &amp; replacements</button></li>
+          <li><button type="button" class="link" data-info="Shipping">Shipping information</button></li>
+          <li><button type="button" class="link" data-info="FAQ">FAQs</button></li>
+          <li><button type="button" class="link" data-info="Contact">Contact us</button></li>
+        </ul>
+      </nav>
+      <nav class="footer__col" aria-labelledby="fPol">
+        <h3 id="fPol">Policies</h3>
+        <ul>
+          <li><button type="button" class="link" data-info="Privacy policy">Privacy policy</button></li>
+          <li><button type="button" class="link" data-info="Terms of use">Terms of use</button></li>
+          <li><button type="button" class="link" data-info="Refund policy">Refund policy</button></li>
+          <li><button type="button" class="link" data-info="Pesticide safety">Pesticide safety notice</button></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="container footer__bottom">
+      <p>© <span id="year"></span> KisanKart demo. All product data is illustrative.</p>
+      <p>Made for learning purposes · Not affiliated with any retailer.</p>
+    </div>
+  </footer>
+
+</div><!-- /.shell -->
+
+  <!-- Cart drawer -->
+  <aside class="drawer drawer--right" id="cartDrawer" role="dialog" aria-modal="true" aria-labelledby="cartTitle" hidden>
+    <div class="drawer__head">
+      <h2 class="drawer__title" id="cartTitle">Your cart <span class="drawer__sub" id="cartTitleCount"></span></h2>
+      <button class="icon-btn" type="button" data-close="cartDrawer" aria-label="Close cart">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+    </div>
+    <div class="drawer__body" id="cartItems"></div>
+    <div class="drawer__foot" id="cartFoot">
+      <dl class="totals">
+        <div><dt>Subtotal</dt><dd id="cartSubtotal">₹0</dd></div>
+        <div><dt>You save</dt><dd class="totals__save" id="cartSavings">₹0</dd></div>
+        <div><dt>Delivery</dt><dd id="cartDelivery">Calculated at checkout</dd></div>
+        <div class="totals__grand"><dt>Total</dt><dd id="cartTotal">₹0</dd></div>
+      </dl>
+      <button class="btn btn--primary btn--block" type="button" id="checkoutBtn">Proceed to checkout</button>
+      <button class="btn btn--ghost btn--block" type="button" id="clearCartBtn">Clear cart</button>
+      <p class="drawer__note">Demo store: checkout does not place a real order or collect payment.</p>
+    </div>
+  </aside>
+
+  <!-- Wishlist drawer -->
+  <aside class="drawer drawer--right" id="wishlistDrawer" role="dialog" aria-modal="true" aria-labelledby="wlTitle" hidden>
+    <div class="drawer__head">
+      <h2 class="drawer__title" id="wlTitle">Wishlist <span class="drawer__sub" id="wlTitleCount"></span></h2>
+      <button class="icon-btn" type="button" data-close="wishlistDrawer" aria-label="Close wishlist">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+    </div>
+    <div class="drawer__body" id="wishlistItems"></div>
+  </aside>
+
+  <!-- Quick view modal -->
+  <div class="modal" id="quickView" role="dialog" aria-modal="true" aria-labelledby="qvTitle" hidden>
+    <div class="modal__box">
+      <button class="icon-btn modal__close" type="button" data-close="quickView" aria-label="Close quick view">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+      <div class="modal__content" id="qvContent"></div>
+    </div>
+  </div>
+
+  <!-- Info modal (footer links, account) -->
+  <div class="modal" id="infoModal" role="dialog" aria-modal="true" aria-labelledby="infoTitle" hidden>
+    <div class="modal__box modal__box--sm">
+      <button class="icon-btn modal__close" type="button" data-close="infoModal" aria-label="Close">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+      <div class="modal__content">
+        <h2 id="infoTitle"></h2>
+        <p id="infoText"></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="backdrop" id="backdrop" hidden></div>
+  <div class="toasts" id="toasts" aria-live="polite" aria-atomic="false"></div>
+
+  <button class="back-top" type="button" id="backTop" aria-label="Back to top" hidden>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 15 6-6 6 6"/></svg>
+  </button>
+
+  <script src="js/data.js?v=3"></script>
+  <script src="js/main.js?v=12"></script>
+  <script src="js/motion.js?v=4"></script>
+  <script src="js/scroll-scene.js?v=5" defer></script>
+</body>
+</html>

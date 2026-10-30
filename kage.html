@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Kage — Where stillness reveals the unseen</title>
+  <meta name="description" content="The complete authored Kage temple experience, preserved as an interactive full-page document with its original navigation, scroll scenes, and local Three.js world." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%2305070a'/%3E%3Ccircle cx='16' cy='17' r='8' fill='%23e0231c'/%3E%3Crect x='4' y='8' width='24' height='2.6' fill='%23dfe7e0'/%3E%3Crect x='7' y='13' width='18' height='2' fill='%23dfe7e0'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="css/threeui.css" />
+  <style>
+    /* Scene host: the `.shader-frame` wrapper from the configured usage. */
+    html, body { margin: 0; height: 100%; background: #080808; }
+    .shader-frame { position: fixed; inset: 0; width: 100%; height: 100%; }
+    .shader-frame > .landing-page-frame { width: 100%; height: 100%; }
+  </style>
+</head>
+<body>
+  <!--
+    Equivalent of:
+      <div className="shader-frame">
+        <KageLandingPage headingFont="onest" bodyFont="onest" headingWeight="400" bodyWeight="300"
+                         primaryColor="#e0231c" headingSize={46} bodySize={17} headingLetterSpacing={-0.012} />
+      </div>
+  -->
+  <div class="shader-frame" id="scene"></div>
+
+  <script src="js/kage-landing-page.js"></script>
+  <script>
+    ThreeUI.KageLandingPage({
+      mount: document.getElementById('scene'),
+      headingFont: 'onest',
+      bodyFont: 'onest',
+      headingWeight: '400',
+      bodyWeight: '300',
+      primaryColor: '#e0231c',
+      headingSize: 46,
+      bodySize: 17,
+      headingLetterSpacing: -0.012,
+    });
+  </script>
+</body>
+</html>
