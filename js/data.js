@@ -273,3 +273,17 @@ const SEARCH_TERMS = [
   ...CATEGORIES.map((c) => ({ type: 'category', label: c.name, slug: c.slug })),
   ...CROPS.map((c) => ({ type: 'crop', label: `${c.name} crop`, slug: c.slug })),
 ];
+
+/* ---------- Campaign tiles (editorial promo band) ---------- */
+const CAMPAIGNS = [
+  { lead: true, tag: 'Seasonal campaign', title: 'Kharif season, <em>started right</em>', text: 'Certified seeds, balanced nutrition and crop protection for a strong start to the sowing window.',
+    image: 'assets/images/hero/maize-field.webp', alt: 'Farmer checking a tablet in a young maize field at sunset', category: 'seeds', cta: 'Shop seeds' },
+  { tag: 'Fertilizer offers', title: 'Crop nutrition bundles', text: 'Water-soluble NPK, micronutrients and bio-stimulants.',
+    image: IMG('1416879595882-3373a0480b5b', 900), alt: 'Hands holding seedlings in dark soil', category: 'fertilizers', cta: 'View offers' },
+  { tag: 'Crop protection', title: 'Scout, spray, protect', text: 'Insecticides, fungicides and traps with clear label guidance.',
+    image: IMG('1530836369250-ef72a3f5cda8', 900), alt: 'Close view of green crop leaves', category: 'insecticides', cta: 'Protect crops' },
+  { tag: 'Organic farming', title: 'Residue-free, naturally', text: 'Neem products, composts and bio-inputs.',
+    image: IMG('1542838132-92c53300491e', 900), alt: 'Fresh vegetables in a market crate', category: 'organic', cta: 'Go organic' },
+  { tag: 'Farm equipment', title: 'Sprayers, tillers, drip kits', text: 'Machinery that saves time, water and labour.',
+    image: 'assets/images/hero/drone-spraying.webp', alt: 'Agricultural drone spraying a green field at sunrise', category: 'machinery', cta: 'See equipment' },
+];

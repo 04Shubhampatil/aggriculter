@@ -63,7 +63,7 @@
   const RV_TARGETS = [
     '.section__label', '.section__sub', '.section__head .btn', '.promo__content p', '.promo__content .btn',
     '.features li', '.bento__ring', '.stats li', '.solution', '.article', '.benefit', '.crop-card', '.cat-card',
-    '.brand-chip', '.newsletter__form', '.footer__follow', '.footer__cta .btn', '.footer__col',
+    '.campaign', '.brand-chip', '.newsletter__form', '.footer__follow', '.footer__cta .btn', '.footer__col',
   ].join(', ');
 
   const wireReveals = () => {

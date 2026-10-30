@@ -170,11 +170,14 @@
   };
 
   const renderCategoryCards = () => {
-    $('#categoryCards').innerHTML = CATEGORIES.map((c) => `
-      <button class="cat-card" type="button" role="listitem" data-category="${c.slug}">
-        <img class="cat-card__img" src="${c.image}" alt="" loading="lazy" width="300" height="300" />
-        <span class="cat-card__name">${escapeHtml(c.name)}</span>
-      </button>`).join('');
+    $('#categoryCards').innerHTML = CATEGORIES.map((c) => {
+      const n = PRODUCTS.filter((p) => p.category === c.slug).length;
+      return `
+      <button class="cat-card" type="button" role="listitem" data-category="${c.slug}" aria-label="${escapeHtml(c.name)}: ${n} product${n === 1 ? '' : 's'}">
+        <img class="cat-card__img" src="${c.image}" alt="" loading="lazy" width="300" height="375" />
+        <span class="cat-card__name">${escapeHtml(c.name)}<small>${n} product${n === 1 ? '' : 's'}</small></span>
+      </button>`;
+    }).join('');
   };
 
   const renderCrops = () => {
@@ -214,17 +217,30 @@
     el.innerHTML = stats.map((s) => `<li><b>${s.value}</b><span>${escapeHtml(s.label)}</span></li>`).join('');
   };
 
+  const renderCampaigns = () => {
+    const el = $('#campaignGrid');
+    if (!el) return;
+    el.innerHTML = CAMPAIGNS.map((c) => `
+      <button class="campaign ${c.lead ? 'campaign--lead' : ''}" type="button" data-category="${c.category}" aria-label="${escapeHtml(c.tag)}: ${escapeHtml(c.title.replace(/<[^>]+>/g, ''))}">
+        <img class="campaign__img" src="${c.image}" alt="${escapeHtml(c.alt)}" loading="lazy" width="900" height="700" />
+        <span class="campaign__tag">${escapeHtml(c.tag)}</span>
+        <span class="campaign__title">${c.title}</span>
+        <span class="campaign__text">${escapeHtml(c.text)}</span>
+        <span class="campaign__cta">${escapeHtml(c.cta)} <i aria-hidden="true">→</i></span>
+      </button>`).join('');
+  };
+
   const renderBrands = () => {
     $('#brandRow').innerHTML = BRANDS.map((b) => `<div class="brand-chip">${escapeHtml(b)}</div>`).join('');
   };
 
   const renderArticles = () => {
     $('#articleCards').innerHTML = ARTICLES.map((a, i) => `
-      <article class="article">
+      <article class="article ${i === 0 ? 'article--feature' : ''}">
         <img class="article__img" src="${a.image}" alt="" loading="lazy" width="800" height="500" />
         <div class="article__body">
           <div class="article__meta"><b>${escapeHtml(a.tag)}</b><span>${a.time}</span></div>
-          <h3>${escapeHtml(a.title)}</h3>
+          <h3 class="${i === 0 ? 'article__title-lg' : ''}">${escapeHtml(a.title)}</h3>
           <p>${escapeHtml(a.text)}</p>
           <button class="article__link" type="button" data-info="article" data-index="${i}">Read article →</button>
         </div>
@@ -930,6 +946,7 @@
     renderSolutions();
     renderBrands();
     renderArticles();
+    renderCampaigns();
     renderStats();
     renderCart();
     renderWishlist();
